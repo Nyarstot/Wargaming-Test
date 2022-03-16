@@ -1,4 +1,5 @@
-#pragma once
+#ifndef ISEVEN_H
+#define ISEVEN_H
 
 // isEven function given by Wargaming
 bool wg_isEven(int value)
@@ -11,3 +12,5 @@ bool isEven(int value)
 {
 	return (value >> 1) << 1 == value;
 }
+
+#endif // !ISEVEN_H

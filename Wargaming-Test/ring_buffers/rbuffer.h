@@ -1,49 +1,20 @@
-#pragma once
+#ifndef RBUFFER_H
+#define RBUFFER_H
 
 #include <utility>
 
-template <typename rbuffer>
-class ring_iterator
-{
-public:
-	using valueType		= typename rbuffer::valueType;
-	using pointerType	= valueType*;
-	using referenceType = valueType&;
-
-public:
-
-	ring_iterator(pointerType ptr) : m_Ptr(ptr)
-	{
-	}
-
-	ring_iterator& operator++() { m_Ptr++; return *this; }
-	ring_iterator operator++(int) { ring_iterator it = *this; ++(*this); return it; }
-	ring_iterator& operator--() { m_Ptr--; return *this; }
-	ring_iterator operator--(int) { ring_iterator it = *this; --(*this); return it; }
-
-	referenceType operator[](int index) { return *(m_Ptr + index); }
-
-	pointerType operator->() { return m_Ptr; }
-	referenceType operator*() { return *m_Ptr; }
-
-	bool operator==(const ring_iterator& it) const { return m_Ptr == it.m_Ptr; }
-	bool operator!=(const ring_iterator& it) const { return !(*this == it); }
-
-private:
-	pointerType m_Ptr;
-
-};
+#include "ring_iterator.h"
 
 template<typename T>
 class rbuffer
 {
 public:
 	using valueType = T;
-	using iterator	= ring_iterator<rbuffer<T>>;
+	using iterator = ring_iterator<rbuffer<T>>;
 
 public:
 	rbuffer() {}
-	rbuffer(size_t size) : m_Size(size) 
+	rbuffer(size_t size) : m_Size(size)
 	{
 		m_Capacity = m_Size + m_Size / 2;
 		m_Buffer = new T[m_Capacity];
@@ -56,12 +27,16 @@ public:
 
 	iterator begin()
 	{
-		return iterator(m_Buffer);
+		return iterator(m_Buffer,
+						m_Buffer,
+						m_Buffer + m_Size);
 	}
 
 	iterator end()
 	{
-		return iterator(m_Buffer + m_Size) ;
+		return iterator(m_Buffer + m_Size,
+						m_Buffer,
+						m_Buffer + m_Size);
 	}
 
 	void push_forward(const T& value)
@@ -83,7 +58,7 @@ public:
 		m_Buffer[m_IndexPointer] = std::move(value);
 	}
 
-	void push_backward(const T& value) 
+	void push_backward(const T& value)
 	{
 		if (m_IndexPointer == 0) {
 			m_IndexPointer = m_Size;
@@ -144,4 +119,7 @@ private:
 		m_Buffer = newBuffer;
 		m_Capacity = newCapacity;
 	}
+
 };
+
+#endif // !RBUFFER_H
