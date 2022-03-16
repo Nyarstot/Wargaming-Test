@@ -20,7 +20,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ring_buffers\rbuffer.h">
+    <ClInclude Include="ring_buffers\ring_buffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="iseven\iseven.h">

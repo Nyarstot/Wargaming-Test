@@ -3,26 +3,29 @@
 
 #include <iostream>
 
-template <typename rbuffer>
+template <typename ring_buffer>
 class ring_iterator
 {
 public:
-	using valueType = typename rbuffer::valueType;
-	using iterator = typename rbuffer::iterator;
+	using valueType = typename ring_buffer::valueType;
+	using iterator = typename ring_buffer::iterator;
 
 	using pointerType = valueType*;
 	using referenceType = valueType&;
 
 public:
 
-	ring_iterator(pointerType ptr, pointerType begin,pointerType end) 
-		: m_Ptr(ptr), p_begin(begin), p_end(end)
+	ring_iterator(pointerType ptr, pointerType beg, pointerType end)
+		: m_Ptr(ptr), p_Begin(beg), p_End(end)
 	{
 		
 	}
 
 	ring_iterator& operator++() {
 		m_Ptr++;
+		if (m_Ptr == p_End) {
+			m_Ptr = p_Begin;
+		}
 		return *this;
 	}
 	ring_iterator operator++(int) { ring_iterator it = *this; ++(*this); return it; }
@@ -41,8 +44,9 @@ public:
 private:
 	pointerType m_Ptr;
 
-	pointerType p_begin;
-	pointerType p_end;
+	pointerType p_Coursor;
+	pointerType p_Begin;
+	pointerType p_End;
 
 };
 

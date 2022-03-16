@@ -143,7 +143,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="iseven\iseven.h" />
-    <ClInclude Include="ring_buffers\rbuffer.h" />
+    <ClInclude Include="ring_buffers\ring_buffer.h" />
     <ClInclude Include="ring_buffers\ring_iterator.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
