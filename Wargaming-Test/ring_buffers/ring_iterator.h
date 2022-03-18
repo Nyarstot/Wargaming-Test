@@ -1,90 +1,96 @@
 #ifndef RING_ITERATOR_H
 #define RING_ITERATOR_H
 
-template <typename ring_buffer>
+template<typename ring_buffer>
 class ring_iterator
 {
 public:
-	using valueType = typename ring_buffer::valueType;
+	using value_type = typename ring_buffer::value_type;
 	using iterator = typename ring_buffer::iterator;
 
-	using pointerType = valueType*;
-	using referenceType = valueType&;
+	using pointer_type = value_type*;
+	using reference_type = value_type&;
 
 public:
-
-	ring_iterator(pointerType ptr, size_t bufferSize, pointerType beg, pointerType end)
-		: m_Ptr(ptr), m_BufferSize(bufferSize), p_Begin(beg), p_End(end)
+	ring_iterator(pointer_type ptr, size_t buffer_size, pointer_type begin, pointer_type end)
+		: p_Ptr(ptr), m_buffer_size(buffer_size), p_Begin(begin), p_End(end)
 	{
 	}
 
-	ring_iterator& operator++() {
-		m_Ptr++;
-		if (m_Ptr == p_End) {
-			m_Ptr = p_Begin;
+	ring_iterator& operator++()
+	{
+		p_Ptr++;
+		if (p_Ptr == p_End) {
+			p_Ptr = p_Begin;
 		}
 
 		return *this;
 	}
 
-	ring_iterator operator++(int) { 
-		ring_iterator it = *this; 
-		++(*this); return it; 
+	ring_iterator operator++(int)
+	{
+		ring_iterator it = *this;
+		++(*this);
+
+		return it;
 	}
 
-	ring_iterator& operator--() { 
-		m_Ptr--; 
-		if (m_Ptr == p_Begin) {
-			m_Ptr = p_End;
+	ring_iterator& operator--()
+	{
+		p_Ptr--;
+		if (p_Ptr == p_Begin) {
+			p_Ptr = p_End;
 		}
 
-		return *this; 
+		return *this;
 	}
 
-	ring_iterator operator--(int) { 
-		ring_iterator it = *this; 
-		--(*this); return it; 
+	ring_iterator operator--(int)
+	{
+		ring_iterator it = *this;
+		--(*this);
+
+		return it;
 	}
 
-	ring_iterator operator+(const int& value) { 
-		int newPosition = (value + std::distance(p_Begin, m_Ptr)) % m_BufferSize;
-		m_Ptr = p_Begin + newPosition;
+	ring_iterator operator+(const int& value)
+	{
+		int newPosition = (value + std::distance(p_Begin, p_Ptr)) % m_buffer_size;
+		p_Ptr = p_Begin + newPosition;
 
-		return *this; 
+		return *this;
 	}
 
-	ring_iterator operator-(const int& value) {
-		int l_Distance = static_cast<int>(std::distance(p_Begin, m_Ptr)) - value;
+	ring_iterator operator-(const int& value)
+	{
+		int l_Distance = std::distance(p_Begin, p_Ptr) - value;
 
 		if (l_Distance < 0) {
-			int newPosition = l_Distance - m_BufferSize * (-abs(l_Distance / static_cast<int>(m_BufferSize)) - 1);
-			m_Ptr = p_Begin + newPosition;
+			int newPosition = l_Distance - m_buffer_size * (-abs(l_Distance / m_buffer_size) - 1);
+			p_Ptr = p_Begin + newPosition;
 
 			return *this;
 		}
 
-		m_Ptr = p_Begin + l_Distance;
+		p_Ptr = p_Begin + l_Distance;
 		return *this;
 	}
 
-	referenceType operator[](int index) { return *(m_Ptr + index); }
+	reference_type operator[](int index) { return *(p_Ptr + index); }
 
-	pointerType operator->() { return m_Ptr; }
-	referenceType operator*() { return *m_Ptr; }
+	pointer_type operator->() { return p_Ptr; }
+	reference_type operator*() { return *p_Ptr; }
 
-	bool operator==(const ring_iterator& it) const { return m_Ptr == it.m_Ptr; }
+	bool operator==(const ring_iterator& it) const { return p_Ptr == it.p_Ptr; }
 	bool operator!=(const ring_iterator& it) const { return !(*this == it); }
-	bool operator<(const ring_iterator& it) const { return m_Ptr < it.m_Ptr; }
 
 private:
-	pointerType m_Ptr;
+	size_t m_buffer_size	= 0;
 
-	size_t m_BufferSize = 0;
-
-	pointerType p_Begin = 0;
-	pointerType p_End = 0;
+	pointer_type p_Ptr		= nullptr;
+	pointer_type p_Begin	= nullptr;
+	pointer_type p_End		= nullptr;
 
 };
 
 #endif // !RING_ITERATOR_H
-
