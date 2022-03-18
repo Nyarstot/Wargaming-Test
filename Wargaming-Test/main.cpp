@@ -7,21 +7,26 @@
 
 int main()
 {
-	ring_buffer<int> tmp(7);
+	ring_buffer<int> tmp(5);
 
-	tmp.set_head(3);
+	tmp.set_head(1);
 
+	/*
+	
+	  |
+	0 1 2 3 4
+	5 1 2 3 4
+
+	*/
+
+	tmp.append(0);
 	tmp.append(1);
 	tmp.append(2);
 	tmp.append(3);
-	tmp.append(4);
-	tmp.append(5);
-	tmp.append(6);
-	tmp.append(7);
 
 	//tmp.print();
 
-	for (ring_buffer<int>::iterator it = tmp.head(); it != tmp.tail(); it++) {
+	for (ring_buffer<int>::iterator it = tmp.tail(); it != tmp.head(); ++it) {
 		std::cout << *it << " ";
 	}
 
