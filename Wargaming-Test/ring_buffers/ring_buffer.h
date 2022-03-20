@@ -8,7 +8,6 @@ class ring_iterator
 {
 public:
 	using value_type	= typename ring_buffer::value_type;
-	using index_type	= typename ring_buffer::index_type;
 	using iterator		= typename ring_buffer::iterator;
 
 	using pointer_type		= value_type*;

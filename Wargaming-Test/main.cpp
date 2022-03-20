@@ -4,8 +4,18 @@
 
 #include "iseven/iseven.h"
 #include "ring_buffers/ring_buffer.h"
+#include "ring_buffers/linked_ring.h"
 
 int main()
 {
+	linked_ring<int> a;
+
+	a.append(1);
+	a.append(2);
+	a.append(3);
+	a.append(4);
+
+	a.show();
+
 	return 0;
 }
