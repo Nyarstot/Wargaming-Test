@@ -15,7 +15,9 @@ int main()
 	a.append(3);
 	a.append(4);
 
-	a.show();
+	for (auto it = a.head(); it != a.tail(); ++it) {
+		std::cout << *it << " ";
+	}
 
 	return 0;
 }

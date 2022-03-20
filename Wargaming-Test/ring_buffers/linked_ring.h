@@ -1,41 +1,86 @@
 #ifndef STATIC_RING_BUFFER_H
 #define STATIC_RING_BUFFER_H
 
-/*
-m_Buffer[m_Head] = value;
-        m_Head = (m_Head + 1) % m_Size;
-*/
-
-#include <iostream>
-
-template<typename linked_ring>
-class linked_ring_iterator
-{
-public:
-    using value_type = typename linked_ring::value_type;
-    //using node_type  = typename linked_ring::node_type;
-    using iterator   = typename linked_ring::iterator;
-
-    using pointer_type   = value_type*;
-    using reference_type = value_type&;
-
-public:
-    linked_ring_iterator() {}
-
-private:
-
-};
-
 template<typename _Ty>
 class linked_ring
 {
 public:
-    using value_type    = _Ty;
-    using size_type     = size_t;
-    using iterator      = linked_ring_iterator<linked_ring<_Ty>>;
+    using value_type = _Ty;
+    using size_type = size_t;
+
+private:
+    size_t m_ElemCount = 0;
+
+    size_type m_Size = 0;
+    size_type m_Carriage = 0;
+
+private:
+    struct Node
+    {
+    public:
+        _Ty m_Data;
+        Node* p_Next;
+
+        Node() {}
+        Node(_Ty value) : m_Data(value), p_Next(nullptr) {}
+    };
+
+    Node* m_Head = nullptr;
+    Node* m_Tail = nullptr;
 
 public:
-    linked_ring() 
+    class iterator
+    {
+    public:
+        iterator(Node* node) : m_Node(node) {}
+
+        void operator++() 
+        {
+            if (m_Node) {
+                m_Node = m_Node->p_Next;
+            }
+        }
+
+
+        bool operator==(const iterator& it) const
+        {
+            if (this == &it) {
+                return true;
+            }
+
+            return m_Node == it.m_Node;
+        }
+
+        bool operator!=(const iterator& it) const
+        {
+            return !(*this == it);
+        }
+
+        _Ty operator*() const
+        {
+            if (m_Node) {
+                return m_Node->m_Data;
+            }
+            return _Ty();
+        }
+
+
+    private:
+        Node* m_Node;
+    };
+
+    iterator head()
+    {
+        return iterator(m_Head);
+    }
+
+    iterator tail()
+    {
+        return iterator(m_Tail);
+    }
+
+public:
+    linked_ring()
     {
     }
     ~linked_ring()
@@ -71,7 +116,7 @@ public:
         }
     }
 
-    void show() 
+    void show()
     {
         Node* tmp = m_Head;
 
@@ -80,38 +125,6 @@ public:
             tmp = tmp->p_Next;
         }
     }
-
-    iterator head()
-    {
-
-    }
-
-    iterator tail()
-    {
-
-    }
-
-
-private:
-    size_t m_ElemCount = 0;
-
-    size_type m_Size = 0;
-    size_type m_Carriage = 0;
-
-private:
-    struct Node
-    {
-    public:
-        _Ty m_Data;
-        Node* p_Next;
-
-        Node() {}
-        Node(_Ty value) : m_Data(value), p_Next(nullptr) {}
-    };
-
-    Node* m_Head = nullptr;
-    Node* m_Tail = nullptr;
 };
 
 #endif // !STATIC_RING_BUFFER_H
-
