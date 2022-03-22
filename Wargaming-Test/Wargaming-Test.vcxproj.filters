@@ -29,5 +29,8 @@
     <ClInclude Include="ring_buffers\linked_ring.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ring_buffers\static_ring.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

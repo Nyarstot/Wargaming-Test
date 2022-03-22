@@ -145,6 +145,7 @@
     <ClInclude Include="iseven\iseven.h" />
     <ClInclude Include="ring_buffers\ring_buffer.h" />
     <ClInclude Include="ring_buffers\linked_ring.h" />
+    <ClInclude Include="ring_buffers\static_ring.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

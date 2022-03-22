@@ -6,7 +6,7 @@ class linked_ring
 {
 public:
     using value_type = _Ty;
-    using size_type = size_t;
+    using size_type  = size_t;
 
 private:
     size_t m_ElemCount = 0;
