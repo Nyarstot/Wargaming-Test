@@ -32,5 +32,11 @@
     <ClInclude Include="ring_buffers\static_ring.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="sort\q_Sort.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sort\selection_sort.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

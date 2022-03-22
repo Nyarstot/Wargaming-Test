@@ -146,6 +146,8 @@
     <ClInclude Include="ring_buffers\ring_buffer.h" />
     <ClInclude Include="ring_buffers\linked_ring.h" />
     <ClInclude Include="ring_buffers\static_ring.h" />
+    <ClInclude Include="sort\q_Sort.h" />
+    <ClInclude Include="sort\selection_sort.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
