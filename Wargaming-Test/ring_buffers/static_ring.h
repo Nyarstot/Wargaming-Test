@@ -3,6 +3,11 @@
 
 #include <stdexcept>
 
+
+/////////////////////////////////////
+/// STATIC_RING_ITERATOR
+/////////////////////////////////////
+
 template<typename static_ring, unsigned _Sze>
 class static_ring_iterator
 {
@@ -59,6 +64,27 @@ private:
     pointer_type m_Begin = nullptr;
     pointer_type m_End = nullptr;
 };
+
+/////////////////////////////////////
+/// STATIC_RING
+/////////////////////////////////////
+
+/*
+* static_ring is the ring buffer class with constant size.
+* Unlike its dynamic counterpart, static_ring don't throw
+* an exception when the ring buffer is full, it just starts
+* overwriting data above already exists in the ring buffer.
+* 
+* Like ring_buffer, the size of static_ring is size + 1 to
+* get data from the buffer without losing the last byte.
+* 
+* for example:
+* 
+* t         h        h t
+* 0 1 2 3 4 5  ->  0 1 2 3 4 5
+* 1 2 3 4 5 x      6 7 4 5 6 x
+* 
+*/
 
 template<typename _Ty, unsigned _Sze>
 class static_ring

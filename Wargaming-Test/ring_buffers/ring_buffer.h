@@ -3,6 +3,10 @@
 
 #include <xmemory>
 
+/////////////////////////////////////
+/// RING_ITERATOR
+/////////////////////////////////////
+
 template<typename ring_buffer>
 class ring_iterator
 {
@@ -66,6 +70,10 @@ private:
 	pointer_type m_Begin = nullptr;
 	pointer_type m_End = nullptr;
 };
+
+/////////////////////////////////////
+/// RING_BUFFER
+/////////////////////////////////////
 
 template<typename _Ty, class _Alloc = std::allocator<_Ty>>
 class ring_buffer
