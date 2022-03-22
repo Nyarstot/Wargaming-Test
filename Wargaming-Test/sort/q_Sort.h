@@ -2,7 +2,6 @@
 #define Q_SORT_H
 
 #include <utility>
-#include <vector>
 
 void q_Sort(int* arr, int left, int right)
 {
