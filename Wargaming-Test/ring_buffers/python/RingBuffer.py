@@ -17,7 +17,17 @@ class RingBuffer:
 
     def pop(self):
         self.__buffer[self.__tail] = None
+        self.__counter -= 1
         self.__tail += 1
+
+    def resize(self, new_size: int):
+        temp = RingBuffer(new_size)
+        for i in range(self.__size):
+            temp[i] = self.__next__()
+        self.__buffer = temp.__buffer
+        self.__size = temp.__size
+        self.__tail = temp.__tail
+        self.__head = temp.__head
 
     def get_from_tail(self):
         return self.__buffer[self.__tail]
@@ -31,6 +41,9 @@ class RingBuffer:
     def full(self):
         return self.__counter == self.__size
 
+    def size(self):
+        return self.__size
+
     def get(self):
         return self.__buffer
 
@@ -41,6 +54,12 @@ class RingBuffer:
     @staticmethod
     def __prev_index(index: int, size: int):
         return (size - 1) if index == 0 else index - 1
+
+    def __getitem__(self, index: int):
+        return self.__buffer[index % self.__size]
+
+    def __setitem__(self, index: int, value):
+        self.__buffer[index] = value
 
     def __iter__(self):
         return self
